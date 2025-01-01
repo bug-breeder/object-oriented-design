@@ -2,34 +2,34 @@ package vehicles
 
 import "github.com/bug-breeder/object-oriented-design/01_parking_lot/vehicle_types"
 
-type Vehicle struct {
+type Vehicle interface {
+	GetLicenseNumber() string
+	GetType() vehicle_types.VehicleType
+	GetCost() int
+}
+
+type BaseVehicle struct {
 	LicenseNumber string
 	Type          vehicle_types.VehicleType
 	Cost          int
 }
 
-func NewVehicle(licenseNumber string, vehicleType vehicle_types.VehicleType) *Vehicle {
-	return &Vehicle{
+func NewBaseVehicle(licenseNumber string, vehicleType vehicle_types.VehicleType) *BaseVehicle {
+	return &BaseVehicle{
 		LicenseNumber: licenseNumber,
 		Type:          vehicleType,
 		Cost:          vehicle_types.GetCost(vehicleType),
 	}
 }
 
-type IVehicle interface {
-	GetLicenseNumber() string
-	GetType() vehicle_types.VehicleType
-	GetCost() int
+func (b *BaseVehicle) GetLicenseNumber() string {
+	return b.LicenseNumber
 }
 
-func (v *Vehicle) GetLicenseNumber() string {
-	return v.LicenseNumber
+func (b *BaseVehicle) GetType() vehicle_types.VehicleType {
+	return b.Type
 }
 
-func (v *Vehicle) GetType() vehicle_types.VehicleType {
-	return v.Type
-}
-
-func (v *Vehicle) GetCost() int {
-	return v.Cost
+func (b *BaseVehicle) GetCost() int {
+	return b.Cost
 }
